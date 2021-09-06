@@ -9,9 +9,10 @@ def output_individual_roll():
 
     with open('regtable_old.csv', 'r') as f:
         for l in f:
-            words = l.split(',')  
+            words = l.split(',') 
+            del words[4:8] 
             del words[2]
-            del words[4:8]
+            
             if (words[0] =="rollno"):continue
             
             if(os.path.exists("output_individual_roll\\{}.csv".format(words[0]))):
