@@ -25,6 +25,25 @@ def regex_renamer():
 	webseries_num = int(input("Enter the number of the web series that you wish to rename. 1/2/3: "))
 	season_padding = int(input("Enter the Season Number Padding: "))
 	episode_padding = int(input("Enter the Episode Number Padding: "))
+	p=os.getcwd()
+	sc=os.path.join(p,'wrong_srt')
+	des=os.path.join(p,'wrong_srt_ sample_Before_rename')
+	if os.path.exists(des):
+		shutil.rmtree(des)
+	
+	os.makedirs(os.path.dirname(des), exist_ok=True)
+	
+	
+	shutil.copytree(sc, des)
+
+	des_fpath=os.path.join(p,r'corrected_srt')
+	if os.path.exists(os.path.dirname(des_fpath)):
+		pass
+	else:
+
+
+	 os.makedirs(os.path.dirname(des_fpath), exist_ok=True)
+	q=os.path.join(p,'corrected_srt')
 
 	
      
@@ -43,7 +62,7 @@ def regex_renamer():
 				w=1
 				x='0'
 				dst=folde+fr'Breaking Bad- Season {w:{x}>{season_padding}} Episode {m:{x}>{episode_padding}}'+'.srt'
-				#re.sub(r'^[a-z]+ [a-z]+ [a-z0-9]+ [a-z0-9.]{18}$',dst, filename, flags=re.IGNORECASE)
+		
 				os.rename(src,dst)
 				count+=1
 			elif re.search(r'.*mp4$'	,filename):
@@ -51,9 +70,20 @@ def regex_renamer():
 				u=1
 				x='0'
 				dst=folde+fr'Breaking Bad- Season {u:{x}>{season_padding}} Episode {t:{x}>{episode_padding}}'+'.mp4'
-				#re.sub(r'^[a-z]+ [a-z]+ [a-z0-9]+ [a-z0-9.]{18}$',dst, filename, flags=re.IGNORECASE)
+			
 				os.rename(src,dst)
 				bount+=1
+		sc_fpath=os.path.join(p,folde)
+		t=os.path.join(q,'Breaking Bad')
+		if os.path.exists(r'corrected_srt\Breaking Bad\\'):
+			shutil.rmtree(r'corrected_srt\Breaking Bad\\')
+		
+		shutil.copytree(sc_fpath,r'corrected_srt\Breaking Bad\\')
+		shutil.rmtree(sc_fpath)
+		shutil.copytree(r'wrong_srt_ sample_Before_rename\Breaking Bad\\',sc_fpath)
+		
+		
+		
 	if webseries_num==2:
 		count=1
 		bount=1
@@ -70,7 +100,7 @@ def regex_renamer():
                 
 				dst=folder+fr'Game of Thrones - Season {w:{x}>{season_padding}} Episode {m:{x}>{episode_padding}} - '+ st.group(1)+'.srt'
 				os.rename(src,dst)
-				#re.sub(r'^[a-z]+ [a-z]+ [a-z]+ - [0-9x]+ - .*?\.[a-z.]{21}$',dst, filename, flags=re.IGNORECASE)
+				
 				count+=1
 			elif re.search(r'.*mp4$'	,filename):
 				t=str(bount)
@@ -81,9 +111,25 @@ def regex_renamer():
 			
 				dst=folder+fr'Game of Thrones - Season {u:{x}>{season_padding}} Episode {t:{x}>{episode_padding}} - '+st.group(1)+'.mp4'
 
-				#re.sub(r'^[a-z]+ [a-z]+ [a-z]+ - [0-9x]+ - .*?\.[a-z.]{21}$',dst, filename, flags=re.IGNORECASE)
+				
 				os.rename(src,dst)
 				bount+=1
+		
+		
+		sc_fpath=os.path.join(p,folder)
+		t=os.path.join(q,'Game of Thrones')
+		if os.path.exists(r'corrected_srt\Game of Thrones\\'):
+			shutil.rmtree(r'corrected_srt\Game of Thrones\\')
+		
+		shutil.copytree(sc_fpath,r'corrected_srt\Game of Thrones\\')
+		shutil.rmtree(sc_fpath)
+		shutil.copytree(r'wrong_srt_ sample_Before_rename\Game of Thrones\\',sc_fpath)
+
+		
+
+		
+		
+          
 	if webseries_num==3:
 		count=1
 		bount=1
@@ -100,7 +146,7 @@ def regex_renamer():
 				st=re.search(r' - [0-9x]+ - (.*?)\.',filename)
 				
 				dst=folderr+fr'Lucifer- Season {w:{x}>{season_padding}} Episode {m:{x}>{episode_padding}} - '+st.group(1)+'.srt'
-				#re.sub(r'^[a-z]+ - [0-9x]+ - .*?\.[a-z.]{13}$',dst, filename, flags=re.IGNORECASE)
+				
 				os.rename(src,dst)
 				count+=1
 			elif re.search(r'.*mp4$'	,filename):
@@ -110,25 +156,20 @@ def regex_renamer():
 				st=re.search(r' - [0-9x]+ - (.*?)\.',filename)
 				
 				dst=folderr+fr'Lucifer - Season {u:{x}>{season_padding}} Episode {t:{x}>{episode_padding}} - '+st.group(1)+'.mp4'
-				#re.sub(r'^[a-z]+ - [0-9x]+ - .*?\.[a-z.]{13}$',dst, filename, flags=re.IGNORECASE)
+				
 				os.rename(src,dst)
 				bount+=1
+		sc_fpath=os.path.join(p,folderr)
+		t=os.path.join(q,'Lucifer')
+		if os.path.exists(r'corrected_srt\Lucifer\\'):
+			shutil.rmtree(r'corrected_srt\Lucifer\\')
+		
+		shutil.copytree(sc_fpath,r'corrected_srt\Lucifer\\')
+		shutil.rmtree(sc_fpath)
+		shutil.copytree(r'wrong_srt_ sample_Before_rename\Lucifer\\',sc_fpath)
+		
+		
+		
 
-print('Have u renamed all 3 webseries?')
-print('*'*25)
-print('--(1)if yes---type(y)  All Renmaed files will be copied to new directory \'corrected_srt\'')
-print('*'*25)
-print('--(2)   Else--type(n) Rename all given 3 webseries once orderly Then press y')
-print('*'*25)
-ans=(input('y/n---->'))
-if ans=="y":
-  p=os.getcwd()
-
-  src_fpath=os.path.join(p,'wrong_srt')
-  des_fpath=os.path.join(p,r'corrected_srt')
-  
-  os.makedirs(os.path.dirname(des_fpath), exist_ok=True)
-  shutil.copytree(src_fpath, des_fpath)
-else:
- regex_renamer()
+regex_renamer()
  
