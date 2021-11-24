@@ -9,14 +9,15 @@ def feedback_not_submitted():
     temp1_df = pd.read_csv('course_master_dont_open_in_excel.csv')
     temp2_df = pd.read_csv('course_feedback_submitted_by_students.csv')
     temp3_df = pd.read_csv('studentinfo.csv')
+    pd.options.mode.chained_assignment = None
     dat3 = temp2_df.groupby(["stud_roll", "course_code"]).size().reset_index(name="row_freq")
     dat3.rename(columns={'stud_roll': 'rollno','course_code': 'subno'}, inplace=True)
-    temp1_df['non_zero'] = temp1_df.apply(lambda row: 3-str(row.ltp).count('0'), axis=1)
-    dat1 = temp1_df[['subno', 'non_zero']]
-    dat = temp_df[['rollno', 'subno']]
-    dat5 = temp3_df[['Name', 'Roll No', 'email', 'aemail', 'contact']]
+    temp1_df.loc[:,['non_zero']] = temp1_df.apply(lambda row: 3-str(row.ltp).count('0'), axis=1)
+    dat1 = temp1_df.loc[:,['subno', 'non_zero']]
+    dat = temp_df.loc[:,['rollno', 'subno']]
+    dat5 = temp3_df.loc[:,['Name', 'Roll No', 'email', 'aemail', 'contact']]
     dat5.rename(columns={'Roll No': 'rollno'}, inplace=True)
-    dat4 = temp_df[['rollno', 'register_sem', 'schedule_sem', 'subno']]
+    dat4 = temp_df.loc[:,['rollno', 'register_sem', 'schedule_sem', 'subno']]
     res = pd.merge(dat, dat1, on="subno")
     res1 = pd.merge(dat3, res, how='outer',on=["rollno", "subno"])
     res1=res1.fillna(0)
